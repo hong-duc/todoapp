@@ -76,72 +76,76 @@
   });
 </script>
 
-<main class="flex justify-center items-center min-h-screen">
-  <div class="absolute top-0 right-0 join join-vertical">
-    <button
-      class="btn btn-primary {viewMode === ViewMode.All ? 'btn-outline' : ''}"
-      onclick={() => {
-        handlechangeViewMode(ViewMode.All);
-      }}
-    >
-      all tasks
-    </button>
-    <button
-      class="btn btn-secondary {viewMode === ViewMode.done
-        ? 'btn-outline'
-        : ''}"
-      onclick={() => {
-        handlechangeViewMode(ViewMode.done);
-      }}
-    >
-      done tasks
-    </button>
-    <button
-      class="btn btn-accent {viewMode === ViewMode.notDone
-        ? 'btn-outline'
-        : ''}"
-      onclick={() => {
-        handlechangeViewMode(ViewMode.notDone);
-      }}
-    >
-      not done tasks
-    </button>
-  </div>
-  <div class="flex flex-col">
-    <div class="h-screen overflow-y-auto">
-      {#each viewTasks as task, index}
-        <div use:animate={index} out:slideFade={{ index }}>
-          <Task
-            id={task.id}
-            is_done={task.is_done}
-            name={task.name}
-            taskChange={handleTaskChange}
-            ondelete={handleDelete}
-          />
-        </div>
-      {/each}
-    </div>
-
-    <div class="size-32 bottom-0 mb-30">
-      <fieldset
-        class="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box"
+<main class=" min-h-screen p-4">
+  <div class="flex justify-end" id="views button container">
+    <div class="join join-vertical" id="views button">
+      <button
+        class="btn btn-primary {viewMode === ViewMode.All ? 'btn-outline' : ''}"
+        onclick={() => {
+          handlechangeViewMode(ViewMode.All);
+        }}
       >
-        <legend class="fieldset-legend">new task</legend>
-        <div class="join">
-          <input
-            type="text"
-            name="taskname"
-            id="takname"
-            bind:this={inputElement}
-            class="input join-item"
-            placeholder="task name"
-          />
-          <button
-            class="btn btn-outline btn-primary join-item"
-            onclick={handleadd}>add</button
-          >
-        </div>
-      </fieldset>
+        all tasks
+      </button>
+      <button
+        class="btn btn-secondary {viewMode === ViewMode.done
+          ? 'btn-outline'
+          : ''}"
+        onclick={() => {
+          handlechangeViewMode(ViewMode.done);
+        }}
+      >
+        done tasks
+      </button>
+      <button
+        class="btn btn-accent {viewMode === ViewMode.notDone
+          ? 'btn-outline'
+          : ''}"
+        onclick={() => {
+          handlechangeViewMode(ViewMode.notDone);
+        }}
+      >
+        not done tasks
+      </button>
+    </div>
+  </div>
+  <div id="inner">
+    <div class="grid grid-cols-3 grid-rows-3" id="task_list_container">
+      <div class="overflow-y-auto col-span-2 col-start-2" id="task list">
+        {#each viewTasks as task, index}
+          <div use:animate={index} out:slideFade={{ index }}>
+            <Task
+              id={task.id}
+              is_done={task.is_done}
+              name={task.name}
+              taskChange={handleTaskChange}
+              ondelete={handleDelete}
+            />
+          </div>
+        {/each}
+      </div>
+
+      <div class="size-32 bottom-0 mb-30 w-screen" id="input container">
+        <fieldset
+          class="fieldset bg-base-200 border border-base-300 p-4 rounded-box w-full flex flex-row justify-center text-center"
+        >
+          <legend class="fieldset-legend">new task</legend>
+          <div class="join">
+            <input
+              type="text"
+              name="taskname"
+              id="takname"
+              bind:this={inputElement}
+              class="input join-item"
+              placeholder="task name"
+            />
+            <button
+              class="btn btn-outline btn-primary join-item"
+              onclick={handleadd}>add</button
+            >
+          </div>
+        </fieldset>
+      </div>
     </div>
   </div>
 </main>
